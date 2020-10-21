@@ -1,0 +1,97 @@
+﻿@model List<Recipe>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satyaprakash Carousel</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Quick Meals!</h1>
+</div>
+
+<h2 style="font-family:Arial Black; background-color: forestgreen;color: lightgray; text-align: center; font-style: normal">Suggested Recipes</h2>
+<fieldset>
+    <legend style="font-family:Arial Black;color:darkslategray">Here are this months suggested recipes!</legend>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+                <div>
+                    <div id="carousel" class="carousel slide" style="height: 250px;">
+                        <ol class="carousel-indicators">
+                            @{int i = 0;}
+                            @foreach (var Recipe in Model)
+                            {
+                                @if (i == 0)
+                                {
+                                    <li data-target="#carousel" data-slide-to="@i" class="active"></li>
+                                }
+                                else
+                                {
+                                    <li data-target="#carousel" data-slide-to="@i"></li>
+                                }
+                                i++;
+                            }
+                        </ol>
+                        <div class="carousel-inner">
+                            @{i = 0;}
+                            @foreach (var Recipe in Model)
+                            {
+                                @if (i == 0)
+                                {
+                            <div class="item active" style="height: 250px; overflow-y: hidden;">
+                                <form asp-controller="Recipe" asp-action="Details">
+                                    <button type="submit" class="col-12 btn" style="margin: auto;"><img src="/RecipeImages/@Recipe.GetFileName()" width="500" /></button>
+                                        <div class="container">
+                                            <div class="carousel-caption">
+                                                <h1>@Recipe.Title</h1>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="Recipe_RecipeId" name="Recipe.RecipeId" value="@Recipe.RecipeId" />
+                                        <input type="hidden" id="Recipe_Title" name="Recipe.Title" value="@Recipe.Title" />
+                                        <input type="hidden" id="Recipe_CookTime" name="Recipe.CookTime" value="@Recipe.CookTime" />
+                                        <input type="hidden" id="Recipe_Ingredients" name="Recipe.Ingredients" value="@Recipe.Ingredients" />
+                                        <input type="hidden" id="Recipe_Description" name="Recipe.Description" value="@Recipe.Description" />
+</form>
+                            </div>
+                                }
+                                else
+                                {
+                        <div class="item" style="height: 250px; overflow-y: hidden;">
+                            <form asp-controller="Recipe" asp-action="Details">
+                                <button type="submit" class="col-12 btn" style="margin: auto;"><img src="/RecipeImages/@Recipe.GetFileName()" width="500" /></button>
+                                <div class="container">
+                                    <div class="carousel-caption">
+                                        <h1>@Recipe.Title</h1>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="Recipe_RecipeId" name="Recipe.RecipeId" value="@Recipe.RecipeId" />
+                                <input type="hidden" id="Recipe_Title" name="Recipe.Title" value="@Recipe.Title" />
+                                <input type="hidden" id="Recipe_CookTime" name="Recipe.CookTime" value="@Recipe.CookTime" />
+                                <input type="hidden" id="Recipe_Ingredients" name="Recipe.Ingredients" value="@Recipe.Ingredients" />
+                                <input type="hidden" id="Recipe_Description" name="Recipe.Description" value="@Recipe.Description" />
+                            </form>
+                        </div>
+                                }
+                                i++; 
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    $("#carousel").carousel(
+                        {
+                            interval: 2000
+                        });
+                </script>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+
+</script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<p>Welcome to Quick Meals, a site where you can discover new recipes with ingredients you already have in your kitchen. Sign up for an account to be able to save your favorite recipes for later! </p>
